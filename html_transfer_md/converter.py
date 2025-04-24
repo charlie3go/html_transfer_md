@@ -51,7 +51,7 @@ def html_converter(html_text: str, row_fill_merged: bool = True, col_fill_merged
         row_fill_merged (bool): 是否自动按行填充合并的单元格 (默认: True)
         col_fill_merged (bool): 是否自动按列填充合并的单元格 (默认: True)
         fill_mark (str): 用于填充合并单元格的标记 (默认: '无')
-        verbose (bool): 是否显示处理日志 (默认: False)
+        verbose (bool): 是否显示处理日志 (默认: True)
         
     返回:
         str: 转换后的Markdown格式文本
