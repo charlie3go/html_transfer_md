@@ -5,4 +5,4 @@ A Python package to convert HTML tables to Markdown format with support for merg
 ## Installation
 
 ```bash
-pip install html_converter
+pip install html_transfer_md

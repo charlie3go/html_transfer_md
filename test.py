@@ -1,4 +1,4 @@
-from html_converter import html_converter
+from html_transfer_md import html_converter
 
 
 if __name__ == '__main__':

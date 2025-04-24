@@ -20,7 +20,7 @@ Python版本要求: >=3.7
     - html2text>=2020.1.16
 
 使用示例:
-    >>> from html_converter import html_converter
+    >>> from html_transfer_md import html_converter
     >>> html = "<table><tr><th>Header</th></tr><tr><td>Data</td></tr></table>"
     >>> markdown = html_converter(html)
     >>> print(markdown)
