@@ -130,6 +130,7 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
         rows = []
         for tr in table.find_all('tr'):
             row = []
+            rowspan_counts = []
             exist_text = False
             for cell in tr.find_all(['th', 'td']):
                 # 获取单元格文本并清理
@@ -139,6 +140,7 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
                     
                 # 处理rowspan和colspan属性
                 rowspan = int(cell.get('rowspan', 1))
+                rowspan_counts.append(rowspan)
                 colspan = int(cell.get('colspan', 1))
                 
                 # 存储单元格信息
@@ -150,6 +152,10 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
                 })
             
             if exist_text:
+                # 如果该行所有单元格跨行数一致，则更新为1
+                if len(set(rowspan_counts)) == 1:
+                    for r in row:
+                        r['rowspan'] = 1
                 rows.append(row)
 
         if not rows:
@@ -226,6 +232,3 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
     except Exception as e:
         logger.error(f"处理表格时出错: {str(e)}")
         raise
-
-
-
