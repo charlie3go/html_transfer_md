@@ -130,10 +130,13 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
         rows = []
         for tr in table.find_all('tr'):
             row = []
+            exist_text = False
             for cell in tr.find_all(['th', 'td']):
                 # 获取单元格文本并清理
-                cell_text = ''.join(cell.get_text(' ', strip=True).split())
-                
+                cell_text = ' '.join(cell.get_text(' ', strip=True).split())
+                if cell_text.replace(" ", ""):
+                    exist_text = True
+                    
                 # 处理rowspan和colspan属性
                 rowspan = int(cell.get('rowspan', 1))
                 colspan = int(cell.get('colspan', 1))
@@ -146,7 +149,7 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
                     'is_empty': not bool(cell_text) and not cell.find(True)
                 })
             
-            if row:
+            if exist_text:
                 rows.append(row)
 
         if not rows:
@@ -209,7 +212,10 @@ def single_html_table_to_markdown(table, row_fill_merged: bool, col_fill_merged:
             # 数据行
             for row in grid[1:]:
                 row_content = [cell['value'] if cell['value'] else fill_mark for cell in row]
-                markdown_lines.append("| " + " | ".join(row_content) + " |")
+                # 去除重复的行
+                md_content = "| " + " | ".join(row_content) + " |"
+                if md_content not in markdown_lines:
+                    markdown_lines.append(md_content)
         
         if verbose:
             elapsed = (datetime.now() - start_time).total_seconds()
